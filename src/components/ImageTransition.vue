@@ -9,7 +9,7 @@ import { Transition } from 'vue';
 
 <style scoped>
 .slide-fade-enter-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.5s ease-out;
 }
 .slide-fade-enter-from,
 .slide-fade-leave-to {

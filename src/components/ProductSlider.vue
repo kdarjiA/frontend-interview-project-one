@@ -26,11 +26,7 @@ const images = {
   3: {
     video: `/src/assets/product-video.mp4`,
     type: "video",
-  },
-  4: {
-    video: `/src/assets/product-video-two.mp4`,
-    type: "video",
-  },
+  }
 };
 const activeImage = ref(0);
 const showPopupFlag = ref(false);
@@ -58,16 +54,14 @@ const prevImage = () => {
 };
 
 const zoomIn = (e) => {
+  let tempClientX = 0;
+  let tempClientY = 0;
   if (screen.width > 760) {
     var element = document.getElementById("overlay");
     element.style.display = "inline-block";
     element.style.backgroundImage = `url(${
       window.location.origin + images[activeImage.value].image
     })`;
-    // var img = document.getElementById("main-image");
-    // var posX = event.offsetX ? event.offsetX : event.pageX + img.offsetLeft;
-    // var posY = event.offsetY ? event.offsetY : event.pageY + img.offsetTop;
-    // element.style.backgroundPosition = -posX + 250 + "px " + (-posY + 100) + "px";
 
     let clientX = e.clientX - element.offsetLeft;
     let clientY = e.clientY - element.offsetTop;
@@ -77,8 +71,25 @@ const zoomIn = (e) => {
 
     clientX = (clientX / mWidth) * 100;
     clientY = (clientY / mHeight) * 100;
+    
+    
+    tempClientX = clientX;
+    tempClientY = clientY;
+    if(clientX > 0 ) {
+      tempClientX = clientX + 110;
+    } else {
+      tempClientX = clientX - 20
+    }
+    clientX = tempClientX;
 
-    element.style.backgroundPosition = clientX + "% " + clientY + "%";
+    if(clientY >= 100 ) {
+      tempClientY = clientY + 10;
+    } else {
+      tempClientY = clientY - 80
+    }
+    clientY = tempClientY;
+    
+    element.style.backgroundPosition = (clientX) + "% " + (clientY) + "%";
   }
 };
 
@@ -146,7 +157,7 @@ onMounted(() => {});
               class="object-center object-contain aspect-square w-full h-full"
               v-if="image.type === 'image'"
             />
-            <div class="relative" v-else>
+            <div class="relative flex items-center justify-center h-full" v-else>
               <video :src="image.video"></video>
               <div class="absolute inset-0 flex items-center justify-center">
                 <button class="text-2xl text-white">▶️</button>
@@ -206,7 +217,7 @@ onMounted(() => {});
             @touchend="handleTouchEnd"
           />
           <div
-            class="relative pointer-events-auto cursor-pointer"
+            class="relative pointer-events-auto cursor-pointer flex items-center justify-center h-full"
             v-else
             @click="showPopup"
             @touchstart="handleTouchStart"
@@ -214,7 +225,7 @@ onMounted(() => {});
           >
             <video
               :src="images[activeImage].video"
-              class="object-center object-contain aspect-square"
+              class="object-center object-contain aspect-video" 
               id="main-video"
             ></video>
             <div
@@ -226,7 +237,7 @@ onMounted(() => {});
         </ImageTransition>
         <div
           id="overlay"
-          class="absolute top-0 right-0 left-full bg-white z-50 hidden sm:hidden"
+          class="absolute top-0 left-[580px] bg-white z-50 aspect-square hidden"
         ></div>
       </div>
     </div>
@@ -244,11 +255,16 @@ onMounted(() => {});
 <style scoped>
 #overlay {
   border: 1px solid black;
-  width: 550px;
+  width: 500px;
   height: 600px;
   background-repeat: no-repeat;
+  overflow: hidden;
 }
 .active-thumb {
   border: 3px solid blue;
+}
+#main-image {
+  max-width: 100%;
+  min-width: 100%;
 }
 </style>

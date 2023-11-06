@@ -80,8 +80,11 @@ const magnifyImage = (e) => {
 
   clientX = (clientX / mWidth) * 100;
   clientY = (clientY / mHeight) * 100;
+
+  console.log(clientX, clientY);
+
   magnifyImg.style.transform =
-    "translate(-" + clientX + "%, -" + clientY + "%) scale(2)";
+    "translate(-" + (clientX) + "%, -" + (clientY) + "%) scale(1.5)";
 };
 
 const handleMouseLeave = () => {
@@ -91,36 +94,6 @@ const handleMouseLeave = () => {
 
 const handleZoom = (e) => {
   const magnifyImg = document.getElementById("magnifying-img");
-  // clickCount.value++;
-  // if(clickCount.value === 1) {
-  //   timer.value = setTimeout(() => {
-  //     if(!screen.width <= 760) {
-  //       zoomImage.value = !zoomImage.value;
-  //       if(zoomImage.value) {
-  //         magnifyImage(e);
-  //         magnifyImg.src = `${images[modalActiveImage.value].large}`;
-  //       } else {
-  //         handleMouseLeave();
-  //         magnifyImg.src = `${images[modalActiveImage.value].image}`;
-
-  //       }
-  //     }
-  //     clickCount.value = 0
-  //   }, delay)
-  // } else {
-  //   clearTimeout(timer.value);
-  //   clickCount.value = 0;
-  //   if(screen.width <= 760) {
-  //     zoomImage.value = !zoomImage.value;
-  //     if(zoomImage.value) {
-  //       magnifyImage(e);
-  //       magnifyImg.src = `${images[modalActiveImage.value].large}`;
-  //     } else {
-  //       handleMouseLeave();
-  //       magnifyImg.src = `${images[modalActiveImage.value].image}`;
-  //     }
-  //   }
-  // }
   zoomImage.value = !zoomImage.value;
   if (!zoomImage.value) {
     handleMouseLeave();
@@ -158,7 +131,7 @@ watch(activeTab, () => {
   <div
     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 w-full h-full z-[99] p-4"
   >
-    <div class="bg-white rounded-lg p-8 lg:w-3/4 relative sm:h-full w-full">
+    <div class="bg-white rounded-lg p-8 lg:w-3/4 relative sm:h-full w-full overflow-y-auto">
       <button
         class="absolute lg:top-4 sm:top-7 right-4 text-gray-500 hover:text-gray-700"
         type="button"
@@ -236,7 +209,7 @@ watch(activeTab, () => {
                   <video
                     :key="modalActiveImage"
                     :src="data[modalActiveImage].video"
-                    class="object-center object-contain aspect-square"
+                    class="object-center object-contain aspect-video"
                     id="popup-video"
                     controls
                   ></video>
