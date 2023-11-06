@@ -14,6 +14,4 @@ import ProductSlider from "./ProductSlider.vue";
   </section>
 </template>
 
-<style>
-
-</style>
+<style></style>
